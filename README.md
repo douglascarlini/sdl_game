@@ -7,6 +7,7 @@ A C++ Game Using SDL2 Framework
 - [SDL_ttf](https://github.com/libsdl-org/SDL_ttf/releases)
 - [SDL_mixer](https://github.com/libsdl-org/SDL_mixer/releases)
 - [SDL_image](https://github.com/libsdl-org/SDL_image/releases)
+- C++ compiler
 
 ### Configuration
 
