@@ -1,0 +1,7 @@
+.vscode
+.DS_Store
+
+/src/config.hpp
+/Makefile
+/build/*
+*.sh
