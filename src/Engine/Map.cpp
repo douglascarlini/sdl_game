@@ -12,27 +12,30 @@ Map::~Map()
 {
 }
 
-void Map::LoadMap(std::string path, int sizeX, int sizeY)
+void Map::LoadMap(std::string path, int rows, int cols, int scale)
 {
+    int sx, sy, dx, dy;
     std::string img = path + ".png";
     std::string map = path + ".map";
-    Game::map["map"] = map.c_str();
-    Game::map["img"] = img.c_str();
+    Game::Map(img.c_str(), map.c_str(), scale);
 
     char c;
-    int sx, sy;
     std::fstream file;
     file.open("assets/maps/" + map);
 
-    for (int y = 0; y < sizeY; y++)
+    for (int y = 0; y < cols; y++)
     {
-        for (int x = 0; x < sizeX; x++)
+        for (int x = 0; x < rows; x++)
         {
             file.get(c);
             sy = atoi(&c) * TILE_SIZE;
+            dy = y * TILE_SIZE * scale;
+
             file.get(c);
             sx = atoi(&c) * TILE_SIZE;
-            Game::AddTile(sx, sy, x * TILE_SIZE, y * TILE_SIZE);
+            dx = x * TILE_SIZE * scale;
+
+            Game::AddTile(sx, sy, dx, dy);
             file.ignore();
         }
     }

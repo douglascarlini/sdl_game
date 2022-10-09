@@ -33,7 +33,7 @@ void Logic::init()
 
     map = new Map();
 
-    Map::LoadMap("map001", 25, 20);
+    Map::LoadMap("map001", 25, 20, 1);
 
     player.addComponent<TransformComponent>();
     player.addComponent<SpriteComponent>("player_idle.png");

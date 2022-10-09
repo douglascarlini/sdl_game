@@ -8,7 +8,7 @@ public:
     Map();
     ~Map();
 
-    static void LoadMap(std::string path, int sizeX, int sizeY);
+    static void LoadMap(std::string path, int rows, int cols, int scale);
 
 private:
 };

@@ -20,10 +20,11 @@ public:
 
 	void init(const char *title, int width, int height, bool fullscreen);
 
-	static void Map(const char *sImg, const char *sMap)
+	static void Map(const char *sImg, const char *sMap, int zoom)
 	{
 		map.emplace("img", sImg);
 		map.emplace("map", sMap);
+		scale = zoom;
 	}
 
 	static void AddTile(int sx, int sy, int x, int y);
@@ -38,6 +39,7 @@ public:
 	static SDL_Renderer *renderer;
 	static SDL_Event event;
 	static Manager manager;
+	static int scale;
 
 private:
 	SDL_Window *window;

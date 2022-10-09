@@ -5,6 +5,7 @@
 #include "ECS/Components.hpp"
 
 Logic logic;
+int Game::scale;
 Manager Game::manager;
 SDL_Event Game::event;
 SDL_Renderer *Game::renderer = nullptr;
@@ -81,5 +82,5 @@ void Game::clean()
 void Game::AddTile(int sx, int sy, int x, int y)
 {
 	auto &tile(Game::manager.addEntity());
-	tile.addComponent<TileComponent>(sx, sy, x, y, map["img"]);
+	tile.addComponent<TileComponent>(sx, sy, x, y, map["img"], scale);
 }

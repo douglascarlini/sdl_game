@@ -18,14 +18,15 @@ public:
         SDL_DestroyTexture(texture);
     }
 
-    TileComponent(int sx, int sy, int x, int y, const char *path)
+    TileComponent(int sx, int sy, int x, int y, const char *path, int scale)
     {
         texture = TextureManager::LoadTexture(path);
+
         src.w = src.h = TILE_SIZE;
         src.x = sx;
         src.y = sy;
 
-        dst.w = dst.h = TILE_SIZE;
+        dst.w = dst.h = TILE_SIZE * scale;
         dst.x = x;
         dst.y = y;
     }
