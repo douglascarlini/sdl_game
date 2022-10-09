@@ -65,9 +65,12 @@ void Logic::render()
 {
     for (auto &t : tiles_0)
         t->draw();
+
     for (auto &p : players)
         p->draw();
+
     for (auto &e : enemies)
         e->draw();
+
     timer();
 }
