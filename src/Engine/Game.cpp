@@ -1,12 +1,10 @@
-#include "Map.hpp"
 #include "Game.hpp"
+#include "Vector2D.hpp"
 #include "TextManager.hpp"
+#include "../Game/Logic.hpp"
 #include "ECS/Components.hpp"
 
-Map *map;
-Manager manager;
-auto &player(manager.addEntity());
-
+Logic logic;
 SDL_Renderer *Game::renderer = nullptr;
 
 Game::Game()
@@ -38,15 +36,7 @@ void Game::init(const char *title, int width, int height, bool fullscreen)
 		isRunning = true;
 	}
 
-	map = new Map();
-
-	player.addComponent<PositionComponent>();
-	player.addComponent<SpriteComponent>("player.png");
-}
-
-double Game::elapsed()
-{
-	return (SDL_GetTicks() - started) / 1000.0f;
+	logic.init();
 }
 
 void Game::handleEvents()
@@ -66,21 +56,14 @@ void Game::handleEvents()
 
 void Game::update()
 {
-	manager.refresh();
-	manager.update();
+	logic.update(elapsed());
 }
 
 void Game::render()
 {
 	SDL_RenderClear(renderer);
 
-	map->DrawMap();
-	player.draw();
-
-	char timer[100];
-	double t = elapsed();
-	sprintf(timer, "TIME: %.1fs", t);
-	TextManager::Write(renderer, timer, 20, 10, 10);
+	logic.render();
 
 	SDL_RenderPresent(renderer);
 }
