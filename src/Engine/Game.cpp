@@ -65,7 +65,6 @@ void Game::render()
 {
 	SDL_RenderClear(renderer);
 
-	Game::manager.draw();
 	logic.render();
 
 	SDL_RenderPresent(renderer);
@@ -81,6 +80,6 @@ void Game::clean()
 
 void Game::AddTile(int sx, int sy, int x, int y)
 {
-	auto &tile(Game::manager.addEntity());
+	auto &tile(manager.addEntity());
 	tile.addComponent<TileComponent>(sx, sy, x, y, map["img"], scale);
 }

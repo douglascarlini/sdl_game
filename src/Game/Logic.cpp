@@ -19,6 +19,10 @@ enum groupLabels : std::size_t
 auto &wall(Game::manager.addEntity());
 auto &player(Game::manager.addEntity());
 
+auto &tiles_0(Game::manager.getGroup(groupMap));
+auto &players(Game::manager.getGroup(groupPlayers));
+auto &enemies(Game::manager.getGroup(groupEnemies));
+
 void timer()
 {
     char timer[100];
@@ -57,13 +61,9 @@ void Logic::update()
     }
 }
 
-auto &tiles(Game::manager.getGroup(groupMap));
-auto &players(Game::manager.getGroup(groupPlayers));
-auto &enemies(Game::manager.getGroup(groupEnemies));
-
 void Logic::render()
 {
-    for (auto &t : tiles)
+    for (auto &t : tiles_0)
         t->draw();
     for (auto &p : players)
         p->draw();
