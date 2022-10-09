@@ -4,7 +4,9 @@
 #include "TransformComponent.hpp"
 #include "../../config.hpp"
 #include "Components.hpp"
+#include "Animation.hpp"
 #include "SDL.h"
+#include <map>
 
 class SpriteComponent : public Component
 {
@@ -18,17 +20,24 @@ private:
     int frames = 0;
 
 public:
+    int animIndex = 0;
+
+    std::map<const char *, Animation> animations;
+
     SpriteComponent() = default;
     SpriteComponent(const char *path)
     {
         setTexture(path);
     }
 
-    SpriteComponent(const char *path, int nFrames, int mSpeed)
+    SpriteComponent(const char *path, bool isAnimated)
     {
-        speed = mSpeed;
-        animated = true;
-        frames = nFrames;
+        animated = isAnimated;
+
+        Animation idle = Animation(0, 4, 100);
+        animations.emplace("Idle", idle);
+
+        Play("Idle");
         setTexture(path);
     }
 
@@ -54,9 +63,10 @@ public:
     void update() override
     {
         if (animated)
-        {
+
             srcRect.x = srcRect.w * static_cast<int>((SDL_GetTicks() / speed) % frames);
-        }
+
+        srcRect.y = animIndex * transform->height;
 
         destRect.x = static_cast<int>(transform->position.x);
         destRect.y = static_cast<int>(transform->position.y);
@@ -67,5 +77,12 @@ public:
     void draw() override
     {
         TextureManager::Draw(texture, srcRect, destRect);
+    }
+
+    void Play(const char *animName)
+    {
+        animIndex = animations[animName].index;
+        frames = animations[animName].frames;
+        speed = animations[animName].speed;
     }
 };

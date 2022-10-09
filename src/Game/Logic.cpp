@@ -36,7 +36,7 @@ void Logic::init()
 
     player.addComponent<TransformComponent>();
     player.addComponent<InputComponent>();
-    player.addComponent<SpriteComponent>("player_idle.png", 4, 100);
+    player.addComponent<SpriteComponent>("player_idle.png", true);
     player.addComponent<ColliderComponent>("player");
     player.addGroup(groupPlayers);
 
