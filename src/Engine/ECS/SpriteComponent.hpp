@@ -6,6 +6,7 @@
 #include "Components.hpp"
 #include "Animation.hpp"
 #include "SDL.h"
+
 #include <map>
 
 class SpriteComponent : public Component
@@ -27,17 +28,6 @@ public:
     SpriteComponent() = default;
     SpriteComponent(const char *path)
     {
-        setTexture(path);
-    }
-
-    SpriteComponent(const char *path, bool isAnimated)
-    {
-        animated = isAnimated;
-
-        Animation idle = Animation(0, 4, 100);
-        animations.emplace("Idle", idle);
-
-        Play("Idle");
         setTexture(path);
     }
 
@@ -79,10 +69,16 @@ public:
         TextureManager::Draw(texture, srcRect, destRect);
     }
 
+    void AddAnim(const char *name, Animation anim)
+    {
+        animations.emplace(name, anim);
+    }
+
     void Play(const char *animName)
     {
         animIndex = animations[animName].index;
         frames = animations[animName].frames;
         speed = animations[animName].speed;
+        animated = true;
     }
 };

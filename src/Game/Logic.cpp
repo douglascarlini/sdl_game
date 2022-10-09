@@ -1,3 +1,4 @@
+#include "../Engine/ECS/Animation.hpp"
 #include "../Engine/Collision.hpp"
 #include "../Engine/Timer.hpp"
 #include "../Engine/Map.hpp"
@@ -35,9 +36,11 @@ void Logic::init()
     Map::LoadMap("map001.map", 25, 20);
 
     player.addComponent<TransformComponent>();
-    player.addComponent<InputComponent>();
-    player.addComponent<SpriteComponent>("player_idle.png", true);
+    player.addComponent<SpriteComponent>("player_idle.png");
+    player.getComponent<SpriteComponent>().AddAnim("Idle", Animation(0, 4, 100));
+    player.getComponent<SpriteComponent>().Play("Idle");
     player.addComponent<ColliderComponent>("player");
+    player.addComponent<InputComponent>();
     player.addGroup(groupPlayers);
 
     wall.addComponent<TransformComponent>(300.0f, 300.0f, 300, 20, 1);
