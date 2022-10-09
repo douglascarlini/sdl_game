@@ -8,7 +8,9 @@ public:
     Vector2D position;
     Vector2D velocity;
 
-    int speed = 3;
+    float accel = 1.0;
+    float fric = 0.98;
+    int speed = 30;
 
     TransformComponent()
     {
@@ -30,7 +32,10 @@ public:
 
     void update() override
     {
-        position.x += velocity.x * speed;
-        position.y += velocity.y * speed;
+        velocity.x *= fric;
+        velocity.y *= fric;
+
+        position.x += velocity.x;
+        position.y += velocity.y;
     }
 };
