@@ -1,6 +1,6 @@
+#include "UI.hpp"
 #include "Game.hpp"
 #include "Vector2D.hpp"
-#include "UI.hpp"
 #include "../Game/Logic.hpp"
 #include "ECS/Components.hpp"
 

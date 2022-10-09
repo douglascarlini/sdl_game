@@ -15,6 +15,13 @@ Map::Map()
     dst.w = dst.h = TILE_SIZE;
 }
 
+Map::~Map()
+{
+    SDL_DestroyTexture(grass);
+    SDL_DestroyTexture(water);
+    SDL_DestroyTexture(dirty);
+}
+
 void Map::LoadMap(int arr[20][25])
 {
     for (int row = 0; row < 20; row++)

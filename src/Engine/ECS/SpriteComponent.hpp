@@ -17,7 +17,12 @@ public:
     SpriteComponent() = default;
     SpriteComponent(const char *path)
     {
-        texture = TextureManager::LoadTexture(path);
+        setTexture(path);
+    }
+
+    ~SpriteComponent()
+    {
+        SDL_DestroyTexture(texture);
     }
 
     void setTexture(const char *path)
@@ -29,8 +34,8 @@ public:
     {
         transform = &entity->getComponent<TransformComponent>();
 
-        destRect.w = destRect.h = TILE_SIZE;
-        srcRect.w = srcRect.h = TILE_SIZE;
+        srcRect.h = transform->height;
+        srcRect.w = transform->width;
         srcRect.x = srcRect.y = 0;
     }
 
@@ -38,6 +43,8 @@ public:
     {
         destRect.x = (int)transform->position.x;
         destRect.y = (int)transform->position.y;
+        destRect.w = transform->width * transform->scale;
+        destRect.h = transform->height * transform->scale;
     }
 
     void draw() override
