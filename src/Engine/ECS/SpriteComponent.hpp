@@ -13,10 +13,22 @@ private:
     SDL_Rect srcRect, destRect;
     SDL_Texture *texture;
 
+    bool animated = false;
+    int speed = 100;
+    int frames = 0;
+
 public:
     SpriteComponent() = default;
     SpriteComponent(const char *path)
     {
+        setTexture(path);
+    }
+
+    SpriteComponent(const char *path, int nFrames, int mSpeed)
+    {
+        speed = mSpeed;
+        animated = true;
+        frames = nFrames;
         setTexture(path);
     }
 
@@ -41,6 +53,11 @@ public:
 
     void update() override
     {
+        if (animated)
+        {
+            srcRect.x = srcRect.w * static_cast<int>((SDL_GetTicks() / speed) % frames);
+        }
+
         destRect.x = static_cast<int>(transform->position.x);
         destRect.y = static_cast<int>(transform->position.y);
         destRect.h = transform->height * transform->scale;
