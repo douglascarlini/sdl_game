@@ -1,11 +1,13 @@
 #include "../Engine/ECS/Animation.hpp"
 #include "../Engine/Collision.hpp"
+#include "../Engine/Vector2D.hpp"
 #include "../Engine/Timer.hpp"
 #include "../Engine/Map.hpp"
 #include "../Engine/UI.hpp"
 #include "Logic.hpp"
 
 Map *map;
+Vector2D Game::speed;
 std::vector<ColliderComponent *> Game::colliders;
 
 enum groupLabels : std::size_t
@@ -35,7 +37,7 @@ void Logic::init()
 {
     Timer::start();
 
-    Map::LoadMap("map001", 25, 20, 1);
+    Map::LoadMap(groupMap, "map001", 25, 20, 1);
 
     player.addComponent<TransformComponent>();
     player.addComponent<SpriteComponent>("player_idle.png");
@@ -44,12 +46,17 @@ void Logic::init()
     player.addComponent<ColliderComponent>("player");
     player.addComponent<InputComponent>();
     player.addGroup(groupPlayers);
+
+    Game::speed.x = -1;
 }
 
 void Logic::update()
 {
-    Game::manager.refresh();
-    Game::manager.update();
+    for (auto t : tiles_0)
+    {
+        t->getComponent<TileComponent>().dst.x += Game::speed.x;
+        t->getComponent<TileComponent>().dst.y += Game::speed.y;
+    }
 
     for (auto cc : Game::colliders)
     {

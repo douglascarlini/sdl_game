@@ -58,6 +58,8 @@ void Game::handleEvents()
 
 void Game::update()
 {
+	manager.refresh();
+    manager.update();
 	logic.update();
 }
 
@@ -78,8 +80,9 @@ void Game::clean()
 	SDL_Quit();
 }
 
-void Game::AddTile(int sx, int sy, int x, int y)
+void Game::AddTile(int sx, int sy, int x, int y, Group g)
 {
 	auto &tile(manager.addEntity());
 	tile.addComponent<TileComponent>(sx, sy, x, y, map["img"], scale);
+	tile.addGroup(g);
 }

@@ -12,7 +12,7 @@ Map::~Map()
 {
 }
 
-void Map::LoadMap(std::string path, int rows, int cols, int scale)
+void Map::LoadMap(Group group, std::string path, int rows, int cols, int scale)
 {
     int sx, sy, dx, dy;
     std::string img = path + ".png";
@@ -28,6 +28,7 @@ void Map::LoadMap(std::string path, int rows, int cols, int scale)
         for (int x = 0; x < rows; x++)
         {
             file.get(c);
+
             sy = atoi(&c) * TILE_SIZE;
             dy = y * TILE_SIZE * scale;
 
@@ -35,7 +36,8 @@ void Map::LoadMap(std::string path, int rows, int cols, int scale)
             sx = atoi(&c) * TILE_SIZE;
             dx = x * TILE_SIZE * scale;
 
-            Game::AddTile(sx, sy, dx, dy);
+            Game::AddTile(sx, sy, dx, dy, group);
+
             file.ignore();
         }
     }

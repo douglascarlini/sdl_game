@@ -9,6 +9,7 @@
 #include "SDL_image.h"
 
 #include "ECS/ECS.hpp"
+#include "Vector2D.hpp"
 
 class ColliderComponent;
 
@@ -27,7 +28,7 @@ public:
 		scale = zoom;
 	}
 
-	static void AddTile(int sx, int sy, int x, int y);
+	static void AddTile(int sx, int sy, int x, int y, Group g);
 	bool running() { return isRunning; }
 	void handleEvents();
 	void update();
@@ -39,6 +40,7 @@ public:
 	static SDL_Renderer *renderer;
 	static SDL_Event event;
 	static Manager manager;
+	static Vector2D speed;
 	static int scale;
 
 private:
