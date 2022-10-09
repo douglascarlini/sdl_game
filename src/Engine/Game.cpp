@@ -5,6 +5,7 @@
 #include "ECS/Components.hpp"
 
 Logic logic;
+Manager Game::manager;
 SDL_Event Game::event;
 SDL_Renderer *Game::renderer = nullptr;
 
@@ -62,6 +63,7 @@ void Game::render()
 {
 	SDL_RenderClear(renderer);
 
+	Game::manager.draw();
 	logic.render();
 
 	SDL_RenderPresent(renderer);
@@ -73,4 +75,10 @@ void Game::clean()
 	SDL_DestroyWindow(window);
 	TTF_Quit();
 	SDL_Quit();
+}
+
+void Game::AddTile(int id, int x, int y)
+{
+	auto &tile(Game::manager.addEntity());
+	tile.addComponent<TileComponent>(x, y, 32, 32, id);
 }

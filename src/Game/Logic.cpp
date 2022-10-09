@@ -6,9 +6,10 @@
 #include "maps.hpp"
 
 Map *map;
-Manager manager;
-auto &wall(manager.addEntity());
-auto &player(manager.addEntity());
+std::vector<ColliderComponent *> Game::colliders;
+
+auto &wall(Game::manager.addEntity());
+auto &player(Game::manager.addEntity());
 
 void timer()
 {
@@ -23,10 +24,11 @@ void Logic::init()
     Timer::start();
 
     map = new Map();
-    map->LoadMap(LVL2);
+
+    Map::LoadMap("assets/maps/map001.map", 25, 20);
 
     player.addComponent<TransformComponent>();
-    player.addComponent<KeyboardController>();
+    player.addComponent<InputComponent>();
     player.addComponent<SpriteComponent>("player.png");
     player.addComponent<ColliderComponent>("player");
 
@@ -37,18 +39,21 @@ void Logic::init()
 
 void Logic::update()
 {
-    manager.refresh();
-    manager.update();
+    Game::manager.refresh();
+    Game::manager.update();
 
-    if (Collision::check(player.getComponent<ColliderComponent>().collider, wall.getComponent<ColliderComponent>().collider))
+    for (auto cc : Game::colliders)
     {
-        std::cout << "Wall hit: " << Timer::elapsed() << std::endl;
+        if (Collision::check(player.getComponent<ColliderComponent>(), *cc))
+        {
+            // player.getComponent<TransformComponent>().velocity * -1;
+            // std::cout << "Wall hit: " << Timer::elapsed() << std::endl;
+        }
     }
 }
 
 void Logic::render()
 {
-    map->DrawMap();
     player.draw();
     wall.draw();
     timer();

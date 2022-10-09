@@ -9,6 +9,7 @@ public:
     void init();
     void render();
     void update();
+
     int lvl() { return level; }
     void lvl(int n) { level = 1; }
 

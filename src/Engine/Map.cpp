@@ -1,67 +1,32 @@
-#include "TextureManager.hpp"
+#include <fstream>
+
 #include "../config.hpp"
+#include "Game.hpp"
 #include "Map.hpp"
 
 Map::Map()
 {
-    grass = TextureManager::LoadTexture("grass.png");
-    water = TextureManager::LoadTexture("water.png");
-    dirty = TextureManager::LoadTexture("dirty.png");
-
-    dst.x = dst.y = 0;
-
-    src.x = src.y = 0;
-    src.w = src.h = TILE_SIZE;
-    dst.w = dst.h = TILE_SIZE;
 }
 
 Map::~Map()
 {
-    SDL_DestroyTexture(grass);
-    SDL_DestroyTexture(water);
-    SDL_DestroyTexture(dirty);
 }
 
-void Map::LoadMap(int arr[20][25])
+void Map::LoadMap(std::string path, int sizeX, int sizeY)
 {
-    for (int row = 0; row < 20; row++)
+    char tile;
+    std::fstream mapFile;
+    mapFile.open(path);
+
+    for (int y = 0; y < sizeY; y++)
     {
-        for (int col = 0; col < 20; col++)
+        for (int x = 0; x < sizeX; x++)
         {
-            map[row][col] = arr[row][col];
+            mapFile.get(tile);
+            Game::AddTile(atoi(&tile), x * 32, y * 32);
+            mapFile.ignore();
         }
     }
-}
 
-void Map::DrawMap()
-{
-    int type = 0;
-    for (int row = 0; row < 20; row++)
-    {
-        for (int col = 0; col < 20; col++)
-        {
-            type = map[row][col];
-
-            dst.x = col * TILE_SIZE;
-            dst.y = row * TILE_SIZE;
-
-            switch (type)
-            {
-            case 0:
-                TextureManager::Draw(water, src, dst);
-                break;
-
-            case 1:
-                TextureManager::Draw(grass, src, dst);
-                break;
-
-            case 2:
-                TextureManager::Draw(dirty, src, dst);
-                break;
-
-            default:
-                break;
-            }
-        }
-    }
+    mapFile.close();
 }

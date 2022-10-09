@@ -5,7 +5,7 @@
 #include "ECS.hpp"
 #include "SDL.h"
 
-class KeyboardController : public Component
+class InputComponent : public Component
 {
 public:
     TransformComponent *transform;
