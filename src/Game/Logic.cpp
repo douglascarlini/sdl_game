@@ -33,7 +33,7 @@ void Logic::init()
 
     map = new Map();
 
-    Map::LoadMap("map001.map", 25, 20);
+    Map::LoadMap("map001", 25, 20);
 
     player.addComponent<TransformComponent>();
     player.addComponent<SpriteComponent>("player_idle.png");
@@ -42,11 +42,6 @@ void Logic::init()
     player.addComponent<ColliderComponent>("player");
     player.addComponent<InputComponent>();
     player.addGroup(groupPlayers);
-
-    wall.addComponent<TransformComponent>(300.0f, 300.0f, 300, 20, 1);
-    wall.addComponent<SpriteComponent>("dirty.png");
-    wall.addComponent<ColliderComponent>("wall");
-    wall.addGroup(groupMap);
 }
 
 void Logic::update()

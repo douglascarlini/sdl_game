@@ -8,6 +8,7 @@ Logic logic;
 Manager Game::manager;
 SDL_Event Game::event;
 SDL_Renderer *Game::renderer = nullptr;
+std::map<const char *, const char *> Game::map;
 
 Game::Game()
 {
@@ -77,8 +78,8 @@ void Game::clean()
 	SDL_Quit();
 }
 
-void Game::AddTile(int id, int x, int y)
+void Game::AddTile(int sx, int sy, int x, int y)
 {
 	auto &tile(Game::manager.addEntity());
-	tile.addComponent<TileComponent>(x, y, 32, 32, id);
+	tile.addComponent<TileComponent>(sx, sy, x, y, map["img"]);
 }

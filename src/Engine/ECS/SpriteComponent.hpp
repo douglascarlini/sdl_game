@@ -12,6 +12,7 @@
 class SpriteComponent : public Component
 {
 private:
+    SDL_RendererFlip flip = SDL_FLIP_NONE;
     TransformComponent *transform;
     SDL_Rect srcRect, destRect;
     SDL_Texture *texture;
@@ -52,8 +53,9 @@ public:
     void update() override
     {
         if (animated)
-
+        {
             srcRect.x = srcRect.w * static_cast<int>((SDL_GetTicks() / speed) % frames);
+        }
 
         srcRect.y = animIndex * transform->height;
 
@@ -65,7 +67,7 @@ public:
 
     void draw() override
     {
-        TextureManager::Draw(texture, srcRect, destRect);
+        TextureManager::Draw(texture, srcRect, destRect, flip);
     }
 
     void AddAnim(const char *name, Animation anim)
