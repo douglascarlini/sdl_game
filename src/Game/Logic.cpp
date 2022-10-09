@@ -6,10 +6,6 @@
 #include "../Engine/UI.hpp"
 #include "Logic.hpp"
 
-Map *map;
-Vector2D Game::speed;
-std::vector<ColliderComponent *> Game::colliders;
-
 enum groupLabels : std::size_t
 {
     groupMap,

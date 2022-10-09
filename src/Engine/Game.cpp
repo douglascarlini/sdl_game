@@ -1,15 +1,19 @@
-#include "UI.hpp"
-#include "Game.hpp"
-#include "Vector2D.hpp"
-#include "../Game/Logic.hpp"
 #include "ECS/Components.hpp"
+#include "../Game/Logic.hpp"
+#include "Vector2D.hpp"
+#include "Game.hpp"
+#include "Map.hpp"
+#include "UI.hpp"
 
+Map *map;
 Logic logic;
 int Game::scale;
+Vector2D Game::speed;
 Manager Game::manager;
 SDL_Event Game::event;
 SDL_Renderer *Game::renderer = nullptr;
 std::map<const char *, const char *> Game::map;
+std::vector<ColliderComponent *> Game::colliders;
 
 Game::Game()
 {
