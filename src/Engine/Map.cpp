@@ -16,7 +16,7 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY)
 {
     char tile;
     std::fstream mapFile;
-    mapFile.open(path);
+    mapFile.open("assets/maps/" + path);
 
     for (int y = 0; y < sizeY; y++)
     {
