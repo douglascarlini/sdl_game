@@ -17,12 +17,11 @@ private:
     SDL_Texture *texture;
 
     bool animated = false;
+    int animIndex = 0;
     int speed = 100;
     int frames = 0;
 
 public:
-    int animIndex = 0;
-
     std::map<const char *, Animation> animations;
 
     SpriteComponent() = default;
@@ -80,5 +79,13 @@ public:
         frames = animations[animName].frames;
         speed = animations[animName].speed;
         animated = true;
+    }
+
+    void Stop()
+    {
+        frames = 0;
+        speed = 100;
+        animIndex = 0;
+        animated = false;
     }
 };

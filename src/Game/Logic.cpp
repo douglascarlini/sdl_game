@@ -37,7 +37,7 @@ void Logic::init()
 
     player.addComponent<TransformComponent>();
     player.addComponent<SpriteComponent>("player_idle.png");
-    player.getComponent<SpriteComponent>().AddAnim("Idle", Animation(0, 4, 100));
+    player.getComponent<SpriteComponent>().AddAnim("Idle", Animation(0, 4, 100, true));
     player.getComponent<SpriteComponent>().Play("Idle");
     player.addComponent<ColliderComponent>("player");
     player.addComponent<InputComponent>();
