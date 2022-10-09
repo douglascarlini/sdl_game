@@ -31,8 +31,6 @@ void Logic::init()
 {
     Timer::start();
 
-    map = new Map();
-
     Map::LoadMap("map001", 25, 20, 1);
 
     player.addComponent<TransformComponent>();
