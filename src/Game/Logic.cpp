@@ -1,4 +1,5 @@
-#include "../Engine/TextManager.hpp"
+#include "../Engine/UI.hpp"
+#include "../Engine/Timer.hpp"
 #include "../Engine/Map.hpp"
 #include "Logic.hpp"
 #include "maps.hpp"
@@ -7,38 +8,33 @@ Map *map;
 Manager manager;
 auto &player(manager.addEntity());
 
+void timer()
+{
+    char timer[100];
+    float t = Timer::elapsed();
+    sprintf(timer, "TIME: %.1fs", t);
+    UI::Text(Game::renderer, timer, 20, 10, 10);
+}
+
 void Logic::init()
 {
+    Timer::start();
     map = new Map();
     map->LoadMap(LVL2);
     player.addComponent<TransformComponent>();
+    player.addComponent<KeyboardController>();
     player.addComponent<SpriteComponent>("player.png");
 }
 
-void Logic::update(double sec)
+void Logic::update()
 {
     manager.refresh();
     manager.update();
-
-    player.getComponent<TransformComponent>().position.Add(Vector2D(1, 0));
-
-    if (sec > 3)
-    {
-        if (lvl() != 1)
-        {
-            lvl(1);
-            map->LoadMap(LVL1);
-        }
-    }
 }
 
 void Logic::render()
 {
     map->DrawMap();
     player.draw();
-
-    char timer[100];
-    double t = seconds;
-    sprintf(timer, "TIME: %.1fs", t);
-    TextManager::Write(Game::renderer, timer, 20, 10, 10);
+    timer();
 }

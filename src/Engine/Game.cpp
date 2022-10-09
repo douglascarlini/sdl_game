@@ -1,10 +1,11 @@
 #include "Game.hpp"
 #include "Vector2D.hpp"
-#include "TextManager.hpp"
+#include "UI.hpp"
 #include "../Game/Logic.hpp"
 #include "ECS/Components.hpp"
 
 Logic logic;
+SDL_Event Game::event;
 SDL_Renderer *Game::renderer = nullptr;
 
 Game::Game()
@@ -32,7 +33,6 @@ void Game::init(const char *title, int width, int height, bool fullscreen)
 
 			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
-		started = SDL_GetTicks();
 		isRunning = true;
 	}
 
@@ -41,7 +41,6 @@ void Game::init(const char *title, int width, int height, bool fullscreen)
 
 void Game::handleEvents()
 {
-	SDL_Event event;
 	SDL_PollEvent(&event);
 
 	switch (event.type)
@@ -56,7 +55,7 @@ void Game::handleEvents()
 
 void Game::update()
 {
-	logic.update(elapsed());
+	logic.update();
 }
 
 void Game::render()

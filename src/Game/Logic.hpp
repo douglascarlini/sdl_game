@@ -8,11 +8,10 @@ class Logic
 public:
     void init();
     void render();
-    void update(double sec);
+    void update();
     int lvl() { return level; }
     void lvl(int n) { level = 1; }
 
 private:
     int level;
-    double seconds;
 };
