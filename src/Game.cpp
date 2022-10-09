@@ -1,9 +1,13 @@
+#include "Map.hpp"
 #include "Game.hpp"
-#include "GameObject.hpp"
 #include "TextManager.hpp"
-#include "TextureManager.hpp"
+#include "ECS/Components.hpp"
 
-GameObject *player;
+Map *map;
+Manager manager;
+auto &player(manager.addEntity());
+
+SDL_Renderer *Game::renderer = nullptr;
 
 Game::Game()
 {
@@ -34,7 +38,10 @@ void Game::init(const char *title, int width, int height, bool fullscreen)
 		isRunning = true;
 	}
 
-	player = new GameObject("player.png", renderer, 0, 0);
+	map = new Map();
+
+	player.addComponent<PositionComponent>();
+	player.addComponent<SpriteComponent>("player.png");
 }
 
 double Game::elapsed()
@@ -59,14 +66,16 @@ void Game::handleEvents()
 
 void Game::update()
 {
-	player->Update();
+	manager.refresh();
+	manager.update();
 }
 
 void Game::render()
 {
 	SDL_RenderClear(renderer);
 
-	player->Render();
+	map->DrawMap();
+	player.draw();
 
 	char timer[100];
 	double t = elapsed();

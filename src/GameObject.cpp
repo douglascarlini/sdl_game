@@ -1,7 +1,7 @@
 #include "GameObject.hpp"
 #include "TextureManager.hpp"
 
-GameObject::GameObject(const char *texturesheet, SDL_Renderer *ren, double x, double y)
+GameObject::GameObject(const char *texturesheet, double x, double y)
 {
     timer = 0;
 
@@ -12,9 +12,7 @@ GameObject::GameObject(const char *texturesheet, SDL_Renderer *ren, double x, do
     accel = 0.5;
     fricc = 0.98;
 
-    renderer = ren;
-
-    objTexture = TextureManager::LoadTexture(texturesheet, ren);
+    objTexture = TextureManager::LoadTexture(texturesheet);
 }
 
 void GameObject::Move()
@@ -67,5 +65,5 @@ void GameObject::Update()
 
 void GameObject::Render()
 {
-    SDL_RenderCopy(renderer, objTexture, &srcRect, &destRect);
+    SDL_RenderCopy(Game::renderer, objTexture, &srcRect, &destRect);
 }

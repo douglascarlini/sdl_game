@@ -21,8 +21,9 @@ public:
 	void render();
 	void clean();
 
+	static SDL_Renderer *renderer;
+
 private:
-	SDL_Renderer *renderer;
 	SDL_Window *window;
 
 	bool isRunning;
