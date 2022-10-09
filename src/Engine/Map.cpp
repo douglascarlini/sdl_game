@@ -1,5 +1,5 @@
 #include "TextureManager.hpp"
-#include "config.hpp"
+#include "../config.hpp"
 #include "Map.hpp"
 
 int lvl1[20][25] = {

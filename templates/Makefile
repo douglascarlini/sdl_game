@@ -1,8 +1,8 @@
-CC = clang++
 SRC_DIR = src
 OBJ_NAME = main
 BUILD_DIR = build
-SRC_FILES = $(wildcard $(SRC_DIR)/*.cpp)
+CC = clang++ -std=c++11 -Wall
+SRC_FILES = $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/Engine/*.cpp) $(wildcard $(SRC_DIR)/Game/*.cpp)
 
 # MacOS
 FRAMEWORK_DIR_MAC = -F/Library/Frameworks -framework SDL2 -F/Library/Frameworks -framework SDL2_image -F/Library/Frameworks -framework SDL2_mixer  -F/Library/Frameworks -framework SDL2_ttf

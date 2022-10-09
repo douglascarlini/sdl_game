@@ -1,5 +1,5 @@
 #include "config.hpp"
-#include "Game.hpp"
+#include "Engine/Game.hpp"
 
 Game *game = nullptr;
 

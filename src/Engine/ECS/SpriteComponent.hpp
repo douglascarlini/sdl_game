@@ -2,8 +2,8 @@
 
 #include "../TextureManager.hpp"
 #include "PositionComponent.hpp"
+#include "../../config.hpp"
 #include "Components.hpp"
-#include "../config.hpp"
 #include "SDL.h"
 
 class SpriteComponent : public Component
