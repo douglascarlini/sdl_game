@@ -1,5 +1,6 @@
 #include "ECS/Components.hpp"
 #include "../Game/Logic.hpp"
+#include "../config.hpp"
 #include "Vector2D.hpp"
 #include "Game.hpp"
 #include "Map.hpp"
@@ -14,6 +15,7 @@ SDL_Event Game::event;
 SDL_Renderer *Game::renderer = nullptr;
 std::map<const char *, const char *> Game::map;
 std::vector<ColliderComponent *> Game::colliders;
+SDL_Rect Game::camera = {0, 0, WIN_WIDTH, WIN_HEIGHT};
 
 Game::Game()
 {
@@ -63,7 +65,7 @@ void Game::handleEvents()
 void Game::update()
 {
 	manager.refresh();
-    manager.update();
+	manager.update();
 	logic.update();
 }
 

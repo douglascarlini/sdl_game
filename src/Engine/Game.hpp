@@ -39,6 +39,7 @@ public:
 	static std::map<const char *, const char *> map;
 	static SDL_Renderer *renderer;
 	static SDL_Event event;
+	static SDL_Rect camera;
 	static Manager manager;
 	static Vector2D speed;
 	static int scale;

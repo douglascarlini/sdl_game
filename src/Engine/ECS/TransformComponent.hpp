@@ -52,7 +52,6 @@ public:
     {
         velocity.x *= fric;
         velocity.y *= fric;
-
         position.x += velocity.x;
         position.y += velocity.y;
     }

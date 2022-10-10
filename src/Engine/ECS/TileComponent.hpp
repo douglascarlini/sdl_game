@@ -11,6 +11,7 @@ class TileComponent : public Component
 public:
     SDL_Texture *texture;
     SDL_Rect src, dst;
+    Vector2D position;
 
     TileComponent() = default;
     ~TileComponent()
@@ -22,13 +23,23 @@ public:
     {
         texture = TextureManager::LoadTexture(path);
 
+        dst.w = dst.h = TILE_SIZE * scale;
         src.w = src.h = TILE_SIZE;
+
+        position.x = x;
+        position.y = y;
+
         src.x = sx;
         src.y = sy;
 
-        dst.w = dst.h = TILE_SIZE * scale;
         dst.x = x;
         dst.y = y;
+    }
+
+    void update() override
+    {
+        dst.x = position.x - Game::camera.x;
+        dst.y = position.y - Game::camera.y;
     }
 
     void draw() override

@@ -48,20 +48,32 @@ void Logic::init()
 
 void Logic::update()
 {
-    for (auto t : tiles_0)
-    {
-        t->getComponent<TileComponent>().dst.x += Game::speed.x;
-        t->getComponent<TileComponent>().dst.y += Game::speed.y;
-    }
+    Game::camera.y = player.getComponent<TransformComponent>().position.y - (WIN_HEIGHT / 2);
+    Game::camera.x = player.getComponent<TransformComponent>().position.x - (WIN_WIDTH / 2);
 
-    for (auto cc : Game::colliders)
-    {
-        if (Collision::check(player.getComponent<ColliderComponent>(), *cc))
-        {
-            // player.getComponent<TransformComponent>().velocity * -1;
-            // std::cout << "Wall hit: " << Timer::elapsed() << std::endl;
-        }
-    }
+    if (Game::camera.x < 0)
+        Game::camera.x = 0;
+    if (Game::camera.y < 0)
+        Game::camera.y = 0;
+    if (Game::camera.x > Game::camera.w)
+        Game::camera.x = Game::camera.w;
+    if (Game::camera.y > Game::camera.h)
+        Game::camera.y = Game::camera.h;
+
+    // for (auto t : tiles_0)
+    // {
+    //     t->getComponent<TileComponent>().dst.x += Game::speed.x;
+    //     t->getComponent<TileComponent>().dst.y += Game::speed.y;
+    // }
+
+    // for (auto cc : Game::colliders)
+    // {
+    //     if (Collision::check(player.getComponent<ColliderComponent>(), *cc))
+    //     {
+    //         // player.getComponent<TransformComponent>().velocity * -1;
+    //         // std::cout << "Wall hit: " << Timer::elapsed() << std::endl;
+    //     }
+    // }
 }
 
 void Logic::render()
