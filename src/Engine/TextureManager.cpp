@@ -7,8 +7,6 @@ SDL_Texture *TextureManager::LoadTexture(const char *texture)
     std::string imagePath = textureFolder + texture;
     const char *path = imagePath.c_str();
 
-    // Util::echo(imagePath);
-
     SDL_Surface *tmpSurface = IMG_Load(path);
     SDL_Texture *tex = SDL_CreateTextureFromSurface(Game::renderer, tmpSurface);
     SDL_FreeSurface(tmpSurface);

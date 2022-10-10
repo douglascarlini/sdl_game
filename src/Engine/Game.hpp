@@ -26,11 +26,18 @@ public:
 	void render();
 	void clean();
 
-	static std::vector<ColliderComponent *> colliders;
 	static SDL_Renderer *renderer;
 	static SDL_Event event;
 	static SDL_Rect camera;
 	static Vector2D speed;
+
+	enum groups : std::size_t
+	{
+		groupMap,
+		groupPlayers,
+		groupEnemies,
+		groupColliders
+	};
 
 private:
 	SDL_Window *window;

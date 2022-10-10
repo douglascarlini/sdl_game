@@ -1,7 +1,6 @@
 .vscode
 .DS_Store
 
-/assets/maps/*.map
 /src/config.hpp
 /Makefile
 /build/*

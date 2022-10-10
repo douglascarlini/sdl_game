@@ -10,20 +10,13 @@
 extern Map *map;
 extern Manager manager;
 
-enum groupLabels : std::size_t
-{
-    groupMap,
-    groupPlayers,
-    groupEnemies,
-    groupColliders
-};
-
 auto &wall(manager.addEntity());
 auto &player(manager.addEntity());
 
-auto &tiles_0(manager.getGroup(groupMap));
-auto &players(manager.getGroup(groupPlayers));
-auto &enemies(manager.getGroup(groupEnemies));
+auto &tiles(manager.getGroup(Game::groupMap));
+auto &players(manager.getGroup(Game::groupPlayers));
+auto &enemies(manager.getGroup(Game::groupEnemies));
+auto &colliders(manager.getGroup(Game::groupColliders));
 
 void timer()
 {
@@ -38,7 +31,7 @@ void Logic::init()
     Timer::start();
 
     map = new Map("map001");
-    map->LoadMap(groupMap, 25, 20, 1);
+    map->LoadMap(Game::groupMap, 25, 20, 1);
 
     player.addComponent<TransformComponent>();
     player.addComponent<SpriteComponent>("player_idle.png");
@@ -46,7 +39,7 @@ void Logic::init()
     player.getComponent<SpriteComponent>().Play("Idle");
     player.addComponent<ColliderComponent>("player");
     player.addComponent<InputComponent>();
-    player.addGroup(groupPlayers);
+    player.addGroup(Game::groupPlayers);
 }
 
 void Logic::update()
@@ -63,25 +56,27 @@ void Logic::update()
     if (Game::camera.y > Game::camera.h)
         Game::camera.y = Game::camera.h;
 
-    // for (auto t : tiles_0)
+    // map move by game speed
+    // for (auto t : tiles)
     // {
     //     t->getComponent<TileComponent>().dst.x += Game::speed.x;
     //     t->getComponent<TileComponent>().dst.y += Game::speed.y;
     // }
 
-    // for (auto cc : Game::colliders)
-    // {
-    //     if (Collision::check(player.getComponent<ColliderComponent>(), *cc))
-    //     {
-    //         // player.getComponent<TransformComponent>().velocity * -1;
-    //         // std::cout << "Wall hit: " << Timer::elapsed() << std::endl;
-    //     }
-    // }
+    SDL_Rect pcol = player.getComponent<ColliderComponent>().collider;
+    for (auto &c : colliders)
+    {
+        SDL_Rect ccol = c->getComponent<ColliderComponent>().collider;
+        if (Collision::check(pcol, ccol))
+        {
+            player.getComponent<TransformComponent>().velocity * -1;
+        }
+    }
 }
 
 void Logic::render()
 {
-    for (auto &t : tiles_0)
+    for (auto &t : tiles)
         t->draw();
 
     for (auto &p : players)
@@ -89,6 +84,9 @@ void Logic::render()
 
     for (auto &e : enemies)
         e->draw();
+
+    for (auto &c : colliders)
+        c->draw();
 
     timer();
 }

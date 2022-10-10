@@ -12,7 +12,6 @@ Manager manager;
 Vector2D Game::speed;
 SDL_Event Game::event;
 SDL_Renderer *Game::renderer = nullptr;
-std::vector<ColliderComponent *> Game::colliders;
 SDL_Rect Game::camera = {0, 0, WIN_WIDTH, WIN_HEIGHT};
 
 Game::Game()
