@@ -1,4 +1,4 @@
-# SDL2 Game
+# SDL2 Game Engine
 A C++ Game Engine Using SDL2 Framework
 
 ### Requirements
