@@ -31,7 +31,7 @@ void Logic::init()
     Timer::start();
 
     map = new Map("map001");
-    map->LoadMap(Game::groupMap, 25, 20, 1);
+    map->LoadMap(Game::groupMap, 25, 20, 2);
 
     player.addComponent<TransformComponent>();
     player.addComponent<SpriteComponent>("player_idle.png");
