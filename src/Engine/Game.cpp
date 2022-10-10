@@ -48,7 +48,11 @@ void Game::init(const char *title, int width, int height, bool fullscreen)
 
 void Game::handleEvents()
 {
+	const Uint8 *keyState = SDL_GetKeyboardState(NULL);
 	SDL_PollEvent(&event);
+
+	if (keyState[SDL_SCANCODE_ESCAPE])
+		isRunning = false;
 
 	switch (event.type)
 	{
