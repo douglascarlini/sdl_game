@@ -23,7 +23,7 @@ void timer()
     char timer[100];
     float t = Timer::elapsed();
     sprintf(timer, "TIME: %.1fs", t);
-    UI::Text(Game::renderer, timer, 20, 10, 10);
+    UI::Text(Game::renderer, timer, 10, 10, 20);
 }
 
 void Logic::init()
@@ -89,4 +89,11 @@ void Logic::render()
         c->draw();
 
     timer();
+
+    float vx = player.getComponent<TransformComponent>().velocity.x;
+    float vy = player.getComponent<TransformComponent>().velocity.y;
+
+    char s[100];
+    sprintf(s, "VEL: %.1f x %.1f", vx, vy);
+    UI::Text(Game::renderer, s, 10, 40, 20);
 }

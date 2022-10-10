@@ -1,6 +1,6 @@
 #include "UI.hpp"
 
-void UI::Text(SDL_Renderer *renderer, const char *text, int size, int x, int y)
+void UI::Text(SDL_Renderer *renderer, const char *text, int x, int y, int size)
 {
     TTF_Init();
 
