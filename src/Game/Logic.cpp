@@ -40,10 +40,14 @@ void Logic::init()
     player.addComponent<ColliderComponent>("player");
     player.addComponent<InputComponent>();
     player.addGroup(Game::groupPlayers);
+
+    player.getComponent<TransformComponent>().velocity.r = 1;
 }
 
 void Logic::update()
 {
+    player.getComponent<TransformComponent>().position.r += player.getComponent<TransformComponent>().velocity.r;
+
     Game::camera.y = player.getComponent<TransformComponent>().position.y - (WIN_HEIGHT / 2);
     Game::camera.x = player.getComponent<TransformComponent>().position.x - (WIN_WIDTH / 2);
 

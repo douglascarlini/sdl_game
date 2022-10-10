@@ -14,9 +14,12 @@ SDL_Texture *TextureManager::LoadTexture(const char *texture)
     return tex;
 }
 
-void TextureManager::Draw(SDL_Texture *tex, SDL_Rect src, SDL_Rect dst, SDL_RendererFlip flip)
+void TextureManager::Draw(SDL_Texture *texture, SDL_Rect src, SDL_Rect dst, SDL_RendererFlip flip)
 {
-    double angle = 0;
-    SDL_Point center = {dst.x - dst.w / 2, dst.y - dst.h / 2};
-    SDL_RenderCopyEx(Game::renderer, tex, &src, &dst, angle, &center, flip);
+    SDL_RenderCopyEx(Game::renderer, texture, &src, &dst, 0, NULL, flip);
+}
+
+void TextureManager::Draw(SDL_Texture *texture, SDL_Rect src, SDL_Rect dst, double angle, SDL_RendererFlip flip)
+{
+    SDL_RenderCopyEx(Game::renderer, texture, &src, &dst, angle, NULL, flip);
 }

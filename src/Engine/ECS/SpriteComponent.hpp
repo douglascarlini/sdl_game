@@ -12,17 +12,16 @@
 class SpriteComponent : public Component
 {
 private:
-    SDL_RendererFlip flip = SDL_FLIP_NONE;
-    TransformComponent *transform;
-    SDL_Rect srcRect, destRect;
-    SDL_Texture *texture;
-
     bool animated = false;
     int animIndex = 0;
     int speed = 100;
     int frames = 0;
 
 public:
+    SDL_Rect src, dst;
+    SDL_Texture *texture;
+    TransformComponent *transform;
+    SDL_RendererFlip flip = SDL_FLIP_NONE;
     std::map<const char *, Animation> animations;
 
     SpriteComponent() = default;
@@ -45,29 +44,29 @@ public:
     {
         transform = &entity->getComponent<TransformComponent>();
 
-        srcRect.h = transform->height;
-        srcRect.w = transform->width;
-        srcRect.x = srcRect.y = 0;
+        src.h = transform->height;
+        src.w = transform->width;
+        src.x = src.y = 0;
     }
 
     void update() override
     {
         if (animated)
         {
-            srcRect.x = srcRect.w * static_cast<int>((SDL_GetTicks() / speed) % frames);
+            src.x = src.w * static_cast<int>((SDL_GetTicks() / speed) % frames);
         }
 
-        srcRect.y = animIndex * transform->height;
+        src.y = animIndex * transform->height;
 
-        destRect.x = static_cast<int>(transform->position.x) - Game::camera.x;
-        destRect.y = static_cast<int>(transform->position.y) - Game::camera.y;
-        destRect.h = transform->height * transform->scale;
-        destRect.w = transform->width * transform->scale;
+        dst.x = static_cast<int>(transform->position.x) - Game::camera.x;
+        dst.y = static_cast<int>(transform->position.y) - Game::camera.y;
+        dst.h = transform->height * transform->scale;
+        dst.w = transform->width * transform->scale;
     }
 
     void draw() override
     {
-        TextureManager::Draw(texture, srcRect, destRect, flip);
+        TextureManager::Draw(texture, src, dst, transform->position.r, flip);
     }
 
     void AddAnim(const char *name, Animation anim)
