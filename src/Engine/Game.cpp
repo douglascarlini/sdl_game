@@ -8,12 +8,10 @@
 
 Map *map;
 Logic logic;
-int Game::scale;
+Manager manager;
 Vector2D Game::speed;
-Manager Game::manager;
 SDL_Event Game::event;
 SDL_Renderer *Game::renderer = nullptr;
-std::map<const char *, const char *> Game::map;
 std::vector<ColliderComponent *> Game::colliders;
 SDL_Rect Game::camera = {0, 0, WIN_WIDTH, WIN_HEIGHT};
 
@@ -84,11 +82,4 @@ void Game::clean()
 	SDL_DestroyWindow(window);
 	TTF_Quit();
 	SDL_Quit();
-}
-
-void Game::AddTile(int sx, int sy, int x, int y, Group g)
-{
-	auto &tile(manager.addEntity());
-	tile.addComponent<TileComponent>(sx, sy, x, y, map["img"], scale);
-	tile.addGroup(g);
 }

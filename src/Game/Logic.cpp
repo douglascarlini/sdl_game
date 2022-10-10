@@ -1,10 +1,14 @@
 #include "../Engine/ECS/Animation.hpp"
 #include "../Engine/Collision.hpp"
 #include "../Engine/Vector2D.hpp"
+#include "../Engine/ECS/ECS.hpp"
 #include "../Engine/Timer.hpp"
 #include "../Engine/Map.hpp"
 #include "../Engine/UI.hpp"
 #include "Logic.hpp"
+
+extern Map *map;
+extern Manager manager;
 
 enum groupLabels : std::size_t
 {
@@ -14,12 +18,12 @@ enum groupLabels : std::size_t
     groupColliders
 };
 
-auto &wall(Game::manager.addEntity());
-auto &player(Game::manager.addEntity());
+auto &wall(manager.addEntity());
+auto &player(manager.addEntity());
 
-auto &tiles_0(Game::manager.getGroup(groupMap));
-auto &players(Game::manager.getGroup(groupPlayers));
-auto &enemies(Game::manager.getGroup(groupEnemies));
+auto &tiles_0(manager.getGroup(groupMap));
+auto &players(manager.getGroup(groupPlayers));
+auto &enemies(manager.getGroup(groupEnemies));
 
 void timer()
 {
@@ -33,7 +37,8 @@ void Logic::init()
 {
     Timer::start();
 
-    Map::LoadMap(groupMap, "map001", 25, 20, 1);
+    map = new Map("map001");
+    map->LoadMap(groupMap, 25, 20, 1);
 
     player.addComponent<TransformComponent>();
     player.addComponent<SpriteComponent>("player_idle.png");
@@ -42,8 +47,6 @@ void Logic::init()
     player.addComponent<ColliderComponent>("player");
     player.addComponent<InputComponent>();
     player.addGroup(groupPlayers);
-
-    Game::speed.x = -1;
 }
 
 void Logic::update()

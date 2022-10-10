@@ -1,10 +1,14 @@
 #include <fstream>
 
+#include "ECS/Components.hpp"
 #include "../config.hpp"
+#include "ECS/ECS.hpp"
 #include "Game.hpp"
 #include "Map.hpp"
 
-Map::Map()
+extern Manager manager;
+
+Map::Map(const char *sName) : name(sName)
 {
 }
 
@@ -12,16 +16,15 @@ Map::~Map()
 {
 }
 
-void Map::LoadMap(Group group, std::string path, int rows, int cols, int scale)
+void Map::LoadMap(Group group, int rows, int cols, int scale)
 {
     int sx, sy, dx, dy;
-    std::string img = path + ".png";
-    std::string map = path + ".map";
-    Game::Map(img.c_str(), map.c_str(), scale);
 
     char c;
     std::fstream file;
-    file.open("assets/maps/" + map);
+    std::string str = std::string(name) + ".map";
+
+    file.open("assets/maps/" + str);
 
     for (int y = 0; y < cols; y++)
     {
@@ -36,11 +39,19 @@ void Map::LoadMap(Group group, std::string path, int rows, int cols, int scale)
             sx = atoi(&c) * TILE_SIZE;
             dx = x * TILE_SIZE * scale;
 
-            Game::AddTile(sx, sy, dx, dy, group);
+            AddTile(sx, sy, dx, dy, group);
 
             file.ignore();
         }
     }
 
     file.close();
+}
+
+void Map::AddTile(int sx, int sy, int x, int y, Group g)
+{
+    auto &tile(manager.addEntity());
+    std::string img = std::string(name) + ".png";
+    tile.addComponent<TileComponent>(sx, sy, x, y, img.c_str(), 1);
+    tile.addGroup(g);
 }
