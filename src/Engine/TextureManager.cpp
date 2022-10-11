@@ -1,9 +1,10 @@
 #include "TextureManager.hpp"
 #include "../config.hpp"
+#include "Game.hpp"
 
 SDL_Texture *TextureManager::LoadTexture(const char *texture)
 {
-    std::string textureFolder = "../assets/textures/";
+    std::string textureFolder = "assets/textures/";
     std::string imagePath = textureFolder + texture;
     const char *path = imagePath.c_str();
 
