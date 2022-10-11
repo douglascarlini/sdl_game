@@ -4,4 +4,5 @@
 /src/config.hpp
 /Makefile
 /build/*
+*.bat
 *.sh

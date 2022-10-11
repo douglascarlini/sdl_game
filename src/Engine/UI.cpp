@@ -8,7 +8,7 @@ void UI::Text(SDL_Renderer *renderer, const char *text, int x, int y, int size)
     int texH = 0;
     SDL_Color color = {255, 255, 255};
 
-    TTF_Font *font = TTF_OpenFont("../assets/fonts/retro.ttf", size);
+    TTF_Font *font = TTF_OpenFont("assets/fonts/retro.ttf", size);
     SDL_Surface *surface = TTF_RenderText_Solid(font, text, color);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
     TTF_CloseFont(font);
