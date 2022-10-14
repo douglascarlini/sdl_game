@@ -11,6 +11,14 @@ class Component;
 class Manager;
 class Entity;
 
+using EntityID = int;
+
+inline EntityID getNewID()
+{
+    static EntityID lastID = 1;
+    return lastID++;
+}
+
 using Group = std::size_t;
 using ComponentID = std::size_t;
 
@@ -49,6 +57,7 @@ public:
 class Entity
 {
 private:
+    int id;
     Manager &manager;
     bool active = true;
     std::vector<std::unique_ptr<Component>> components;
@@ -58,7 +67,14 @@ private:
     GroupBitSet groupBitSet;
 
 public:
-    Entity(Manager &mManager) : manager(mManager) {}
+    Entity(Manager &mManager) : manager(mManager)
+    {
+        id = getNewID();
+
+        char string[100];
+        sprintf(string, "#%05d", id);
+        std::cout << "Entity: " << string << std::endl;
+    }
 
     void update()
     {
@@ -111,6 +127,13 @@ public:
     {
         auto ptr(componentArray[getComponentTypeID<T>()]);
         return *static_cast<T *>(ptr);
+    }
+
+    ~Entity()
+    {
+        char sid[100];
+        sprintf(sid, "#%05d", id);
+        std::cout << "~Entity: " << sid << std::endl;
     }
 };
 
