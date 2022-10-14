@@ -9,7 +9,7 @@
 class ProjectileComponent : public Component
 {
 public:
-    ProjectileComponent(int rng, int spd, Vector2D vel) : velocity(vel), range(rng), speed(spd) {}
+    ProjectileComponent(Vector2D vel, int rng) : velocity(vel), range(rng) {}
 
     ~ProjectileComponent() {}
 
@@ -17,34 +17,31 @@ public:
     {
         transform = &entity->getComponent<TransformComponent>();
         transform->velocity = velocity;
+        initial = *transform;
     }
 
     void update() override
     {
-        distance += speed;
+        distance = Util::distance(transform->position, initial.position);
 
         if (distance > range)
         {
             Util::echo("out of range");
-            entity->destroy();
+            // entity->destroy();
         }
 
-        else if (
-            transform->position.x > Game::camera.x + Game::camera.w ||
-            transform->position.y > Game::camera.y + Game::camera.h ||
-            transform->position.x < Game::camera.x ||
-            transform->position.y < Game::camera.y)
+        else if (Util::out_bounds(transform->position))
         {
             Util::echo("out of bounds");
-            entity->destroy();
+            // entity->destroy();
         }
     }
 
 private:
     TransformComponent *transform;
+    TransformComponent initial;
 
     Vector2D velocity;
     int distance = 0;
     int range = 0;
-    int speed = 0;
 };

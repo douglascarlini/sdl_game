@@ -7,7 +7,6 @@ class TransformComponent : public Component
 public:
     Vector2D position;
     Vector2D velocity;
-    Vector2D rotation;
 
     int height = 64;
     int width = 64;
@@ -20,11 +19,13 @@ public:
     TransformComponent()
     {
         position.Zero();
+        velocity.Zero();
     }
 
     TransformComponent(int s)
     {
         position.Zero();
+        velocity.Zero();
         scale = s;
     }
 
@@ -34,19 +35,25 @@ public:
         position.y = y;
     }
 
-    TransformComponent(float x, float y, int h, int w, int s)
+    TransformComponent(float x, float y, float r)
     {
         position.x = x;
         position.y = y;
+        position.r = r;
+    }
+
+    TransformComponent(float x, float y, float r, int h, int w, int s)
+    {
+        position.x = x;
+        position.y = y;
+        position.r = r;
+
         height = h;
         width = w;
         scale = s;
     }
 
-    void init() override
-    {
-        velocity.Zero();
-    }
+    void init() override {}
 
     void update() override
     {

@@ -23,11 +23,6 @@ void Logic::init()
 {
     Timer::start();
 
-    if (TTF_Init() == -1)
-    {
-        std::cout << "Error: SDL_TTF" << std::endl;
-    }
-
     Game::assets->AddTexture("projectile", "assets/textures/missile.png");
     Game::assets->AddTexture("hitbox", "assets/textures/hitbox.png");
     Game::assets->AddTexture("player", "assets/textures/player.png");
@@ -38,8 +33,8 @@ void Logic::init()
     map = new Map("map001");
     map->LoadMap(Game::groupMap, 1);
 
-    Game::assets->CreatePlayer(Vector2D(300, 300), Vector2D(10, 0), 200, 2, "player");
-    Game::assets->CreateProjectile(Vector2D(100, 100), Vector2D(10, 0), 200, 2, "projectile");
+    Game::assets->CreatePlayer(Vector2D(300, 350, 90), Vector2D(2, 0), 200, "player");
+    Game::assets->CreateProjectile(Vector2D(100, 100, 45), Vector2D(10, 0, 0), 900, "projectile");
 
     label.addComponent<UIComponent>(10, 10, "TESTE", "label", Game::assets->GetColor("white"));
 }

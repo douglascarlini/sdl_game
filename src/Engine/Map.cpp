@@ -31,9 +31,7 @@ int _rows(std::string path)
         total++;
     }
 
-    Util::echo(total);
     stream.close();
-
     return total;
 }
 
@@ -50,15 +48,13 @@ int _cols(std::string path)
         s = text.size() + 1;
     total = s / 3;
 
-    Util::echo(total);
     stream.close();
-
     return total;
 }
 
 void Map::LoadMap(Group group, int zoom)
 {
-    std::string map = Game::assets->GetMap(name);
+    std::string path = Game::assets->GetMap(name);
 
     int sx, sy, dx, dy;
     std::fstream file;
@@ -66,10 +62,10 @@ void Map::LoadMap(Group group, int zoom)
     scale = zoom;
     char c;
 
-    rows = _rows(map);
-    cols = _cols(map);
+    rows = _rows(path);
+    cols = _cols(path);
 
-    file.open(map.c_str());
+    file.open(path.c_str());
 
     for (int y = 0; y < rows; y++)
     {

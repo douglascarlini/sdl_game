@@ -58,24 +58,23 @@ AssetManager::~AssetManager()
 
 // GAME OBJECTS
 
-void AssetManager::CreateProjectile(Vector2D pos, Vector2D vel, int range, int speed, std::string id)
+void AssetManager::CreateProjectile(Vector2D pos, Vector2D vel, int range, std::string id)
 {
     auto &projectile(manager->addEntity());
 
-    projectile.addComponent<TransformComponent>(pos.x, pos.y, TILE_SIZE, TILE_SIZE, 1);
-    projectile.addComponent<ProjectileComponent>(range, speed, vel);
+    projectile.addComponent<TransformComponent>(pos.x, pos.y, pos.r, TILE_SIZE, TILE_SIZE, 1);
+    projectile.addComponent<ProjectileComponent>(vel, range);
     projectile.addComponent<ColliderComponent>("projectile");
     projectile.addComponent<SpriteComponent>(id.c_str());
     projectile.addGroup(Game::groupProjectiles);
 }
 
-void AssetManager::CreatePlayer(Vector2D pos, Vector2D vel, int range, int speed, std::string id)
+void AssetManager::CreatePlayer(Vector2D pos, Vector2D vel, int range, std::string id)
 {
     auto &player(manager->addEntity());
 
-    player.addComponent<TransformComponent>(pos.x, pos.y);
+    player.addComponent<TransformComponent>(pos.x, pos.y, pos.r);
     player.addComponent<SpriteComponent>("player");
-    player.getComponent<TransformComponent>().velocity.r = 1;
     player.getComponent<SpriteComponent>().AddAnim("Idle", Animation(0, 4, 100, true));
     player.getComponent<SpriteComponent>().Play("Idle");
     player.addComponent<ColliderComponent>("player");

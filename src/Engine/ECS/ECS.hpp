@@ -70,10 +70,9 @@ public:
     Entity(Manager &mManager) : manager(mManager)
     {
         id = getNewID();
-
-        char string[100];
-        sprintf(string, "#%05d", id);
-        std::cout << "Entity: " << string << std::endl;
+        // char string[100];
+        // sprintf(string, "#%05d", id);
+        // std::cout << "Entity: " << string << std::endl;
     }
 
     void update()
@@ -131,9 +130,9 @@ public:
 
     ~Entity()
     {
-        char sid[100];
-        sprintf(sid, "#%05d", id);
-        std::cout << "~Entity: " << sid << std::endl;
+        // char sid[100];
+        // sprintf(sid, "#%05d", id);
+        // std::cout << "~Entity: " << sid << std::endl;
     }
 };
 

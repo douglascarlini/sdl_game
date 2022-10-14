@@ -13,8 +13,8 @@ public:
 
     // GAME OBJECTS
 
-    void CreateProjectile(Vector2D pos, Vector2D vel, int range, int speed, std::string id);
-    void CreatePlayer(Vector2D pos, Vector2D vel, int range, int speed, std::string id);
+    void CreateProjectile(Vector2D pos, Vector2D vel, int range, std::string id);
+    void CreatePlayer(Vector2D pos, Vector2D vel, int range, std::string id);
 
     void AddTexture(std::string id, const char *name);
     SDL_Texture *GetTexture(std::string id);
