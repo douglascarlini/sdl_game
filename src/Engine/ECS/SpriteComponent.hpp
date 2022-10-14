@@ -25,9 +25,9 @@ public:
     std::map<const char *, Animation> animations;
 
     SpriteComponent() = default;
-    SpriteComponent(const char *path)
+    SpriteComponent(const char *tID)
     {
-        setTexture(path);
+        setTexture(tID);
     }
 
     ~SpriteComponent()
@@ -35,9 +35,9 @@ public:
         SDL_DestroyTexture(texture);
     }
 
-    void setTexture(const char *path)
+    void setTexture(const char *tID)
     {
-        texture = TextureManager::LoadTexture(path);
+        texture = Game::assets->GetTexture(tID);
     }
 
     void init() override

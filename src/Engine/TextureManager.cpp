@@ -1,13 +1,10 @@
 #include "TextureManager.hpp"
-#include "../config.hpp"
+#include "../Game/Util.hpp"
 #include "Game.hpp"
 
-SDL_Texture *TextureManager::LoadTexture(const char *texture)
+SDL_Texture *TextureManager::LoadTexture(const char *path)
 {
-    std::string textureFolder = "assets/textures/";
-    std::string imagePath = textureFolder + texture;
-    const char *path = imagePath.c_str();
-
+    Util::echo(path);
     SDL_Surface *tmpSurface = IMG_Load(path);
     SDL_Texture *tex = SDL_CreateTextureFromSurface(Game::renderer, tmpSurface);
     SDL_FreeSurface(tmpSurface);

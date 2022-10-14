@@ -13,6 +13,7 @@ Vector2D Game::speed;
 SDL_Event Game::event;
 SDL_Renderer *Game::renderer = nullptr;
 SDL_Rect Game::camera = {0, 0, WIN_WIDTH, WIN_HEIGHT};
+AssetManager *Game::assets = new AssetManager(&manager);
 
 Game::Game()
 {

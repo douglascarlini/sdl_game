@@ -9,8 +9,10 @@
 
 #include "ECS/ECS.hpp"
 #include "Vector2D.hpp"
+#include "AssetManager.hpp"
 
 class ColliderComponent;
+class AssetManager;
 
 class Game
 {
@@ -27,6 +29,7 @@ public:
 	void clean();
 
 	static SDL_Renderer *renderer;
+	static AssetManager *assets;
 	static SDL_Event event;
 	static SDL_Rect camera;
 	static Vector2D speed;
@@ -36,7 +39,8 @@ public:
 		groupMap,
 		groupPlayers,
 		groupEnemies,
-		groupColliders
+		groupColliders,
+		groupProjectiles,
 	};
 
 private:

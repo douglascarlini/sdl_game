@@ -1,6 +1,7 @@
 #include <fstream>
 
 #include "ECS/Components.hpp"
+#include "../Game/Util.hpp"
 #include "../config.hpp"
 #include "ECS/ECS.hpp"
 #include "Game.hpp"
@@ -23,9 +24,11 @@ void Map::LoadMap(Group group, int rows, int cols, int zoom)
 
     char c;
     std::fstream file;
-    std::string str = std::string(name) + ".map";
+    std::string map = Game::assets->GetMap(name);
 
-    file.open("assets/maps/" + str);
+    Util::echo(map);
+
+    file.open(map.c_str());
 
     for (int y = 0; y < cols; y++)
     {
@@ -70,7 +73,6 @@ void Map::LoadMap(Group group, int rows, int cols, int zoom)
 void Map::AddTile(int sx, int sy, int x, int y, Group g)
 {
     auto &tile(manager.addEntity());
-    std::string img = std::string(name) + ".png";
-    tile.addComponent<TileComponent>(sx, sy, x, y, img.c_str(), scale);
+    tile.addComponent<TileComponent>(sx, sy, x, y, name, scale);
     tile.addGroup(g);
 }

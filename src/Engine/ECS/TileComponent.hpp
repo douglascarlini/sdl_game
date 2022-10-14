@@ -19,9 +19,9 @@ public:
         SDL_DestroyTexture(texture);
     }
 
-    TileComponent(int sx, int sy, int x, int y, const char *path, int scale)
+    TileComponent(int sx, int sy, int x, int y, const char *tID, int scale)
     {
-        texture = TextureManager::LoadTexture(path);
+        texture = Game::assets->GetTexture(tID);
 
         dst.w = dst.h = TILE_SIZE * scale;
         src.w = src.h = TILE_SIZE;

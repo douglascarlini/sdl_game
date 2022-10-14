@@ -2,7 +2,6 @@
 #include <string>
 #include "SDL.h"
 #include "Components.hpp"
-#include "../TextureManager.hpp"
 
 class ColliderComponent : public Component
 {
@@ -33,7 +32,7 @@ public:
         transform = &entity->getComponent<TransformComponent>();
 
         src = {0, 0, TILE_SIZE, TILE_SIZE};
-        texture = TextureManager::LoadTexture("hitbox.png");
+        texture = Game::assets->GetTexture("hitbox");
         dst = {collider.x, collider.y, collider.w, collider.h};
     }
 

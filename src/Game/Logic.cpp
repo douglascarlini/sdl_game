@@ -17,6 +17,7 @@ auto &tiles(manager.getGroup(Game::groupMap));
 auto &players(manager.getGroup(Game::groupPlayers));
 auto &enemies(manager.getGroup(Game::groupEnemies));
 auto &colliders(manager.getGroup(Game::groupColliders));
+auto &projectiles(manager.getGroup(Game::groupProjectiles));
 
 void timer()
 {
@@ -30,11 +31,17 @@ void Logic::init()
 {
     Timer::start();
 
+    Game::assets->AddTexture("projectile", "assets/textures/hitbox.png");
+    Game::assets->AddTexture("hitbox", "assets/textures/hitbox.png");
+    Game::assets->AddTexture("player", "assets/textures/player.png");
+    Game::assets->AddTexture("map001", "assets/textures/map001.png");
+    Game::assets->AddMap("map001", "assets/maps/map001.map");
+
     map = new Map("map001");
     map->LoadMap(Game::groupMap, 25, 20, 2);
 
     player.addComponent<TransformComponent>();
-    player.addComponent<SpriteComponent>("player_idle.png");
+    player.addComponent<SpriteComponent>("player");
     player.getComponent<SpriteComponent>().AddAnim("Idle", Animation(0, 4, 100, true));
     player.getComponent<SpriteComponent>().Play("Idle");
     player.addComponent<ColliderComponent>("player");
@@ -42,6 +49,8 @@ void Logic::init()
     player.addGroup(Game::groupPlayers);
 
     player.getComponent<TransformComponent>().velocity.r = 1;
+
+    Game::assets->CreateProjectile(Vector2D(100, 100), Vector2D(10, 0), 200, 2, "projectile");
 }
 
 void Logic::update()
@@ -91,6 +100,9 @@ void Logic::render()
 
     for (auto &c : colliders)
         c->draw();
+
+    for (auto &p : projectiles)
+        p->draw();
 
     timer();
 
