@@ -17,22 +17,63 @@ Map::~Map()
 {
 }
 
-void Map::LoadMap(Group group, int rows, int cols, int zoom)
+int _rows(std::string path)
 {
-    int sx, sy, dx, dy;
-    scale = zoom;
+    std::ifstream stream;
+    stream.open(path);
+    std::string text;
+    int total = 0;
 
-    char c;
-    std::fstream file;
+    while (std::getline(stream, text))
+    {
+        if (!text.size())
+            break;
+        total++;
+    }
+
+    Util::echo(total);
+    stream.close();
+
+    return total;
+}
+
+int _cols(std::string path)
+{
+    std::ifstream stream;
+    stream.open(path);
+    std::string text;
+    int total = 0;
+    int s = 0;
+
+    std::getline(stream, text);
+    if (text.size() % 3 != 0)
+        s = text.size() + 1;
+    total = s / 3;
+
+    Util::echo(total);
+    stream.close();
+
+    return total;
+}
+
+void Map::LoadMap(Group group, int zoom)
+{
     std::string map = Game::assets->GetMap(name);
 
-    Util::echo(map);
+    int sx, sy, dx, dy;
+    std::fstream file;
+    int rows, cols;
+    scale = zoom;
+    char c;
+
+    rows = _rows(map);
+    cols = _cols(map);
 
     file.open(map.c_str());
 
-    for (int y = 0; y < cols; y++)
+    for (int y = 0; y < rows; y++)
     {
-        for (int x = 0; x < rows; x++)
+        for (int x = 0; x < cols; x++)
         {
             file.get(c);
             sy = atoi(&c) * TILE_SIZE;
@@ -50,11 +91,13 @@ void Map::LoadMap(Group group, int rows, int cols, int zoom)
 
     file.ignore();
 
-    for (int y = 0; y < cols; y++)
+    for (int y = 0; y < rows; y++)
     {
-        for (int x = 0; x < rows; x++)
+        for (int x = 0; x < cols; x++)
         {
             file.get(c);
+            file.get(c);
+
             if (c == '1')
             {
                 dy = y * TILE_SIZE * scale;
@@ -63,6 +106,7 @@ void Map::LoadMap(Group group, int rows, int cols, int zoom)
                 tcol.addComponent<ColliderComponent>("hitbox", dx, dy, TILE_SIZE);
                 tcol.addGroup(Game::groupColliders);
             }
+
             file.ignore();
         }
     }

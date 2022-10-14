@@ -73,7 +73,7 @@ void AssetManager::CreatePlayer(Vector2D pos, Vector2D vel, int range, int speed
 {
     auto &player(manager->addEntity());
 
-    player.addComponent<TransformComponent>();
+    player.addComponent<TransformComponent>(pos.x, pos.y);
     player.addComponent<SpriteComponent>("player");
     player.getComponent<TransformComponent>().velocity.r = 1;
     player.getComponent<SpriteComponent>().AddAnim("Idle", Animation(0, 4, 100, true));

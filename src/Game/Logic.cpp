@@ -36,9 +36,9 @@ void Logic::init()
     Game::assets->AddMap("map001", "assets/maps/map001.map");
 
     map = new Map("map001");
-    map->LoadMap(Game::groupMap, 25, 20, 2);
+    map->LoadMap(Game::groupMap, 1);
 
-    Game::assets->CreatePlayer(Vector2D(100, 100), Vector2D(10, 0), 200, 2, "player");
+    Game::assets->CreatePlayer(Vector2D(300, 300), Vector2D(10, 0), 200, 2, "player");
     Game::assets->CreateProjectile(Vector2D(100, 100), Vector2D(10, 0), 200, 2, "projectile");
 
     label.addComponent<UIComponent>(10, 10, "TESTE", "label", Game::assets->GetColor("white"));

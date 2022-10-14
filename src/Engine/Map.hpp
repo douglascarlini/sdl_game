@@ -11,8 +11,8 @@ public:
     ~Map();
 
     int scale;
+    void LoadMap(Group group, int scale);
     void AddTile(int sx, int sy, int x, int y, Group g);
-    void LoadMap(Group group, int rows, int cols, int scale);
 
 private:
     const char *name;
