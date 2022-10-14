@@ -9,7 +9,7 @@
 class ProjectileComponent : public Component
 {
 public:
-    ProjectileComponent(int rng, int spd, Vector2D vel) : range(rng), speed(spd), velocity(vel) {}
+    ProjectileComponent(int rng, int spd, Vector2D vel) : velocity(vel), range(rng), speed(spd) {}
 
     ~ProjectileComponent() {}
 

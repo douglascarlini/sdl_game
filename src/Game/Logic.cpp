@@ -31,7 +31,7 @@ void Logic::init()
 {
     Timer::start();
 
-    Game::assets->AddTexture("projectile", "assets/textures/hitbox.png");
+    Game::assets->AddTexture("projectile", "assets/textures/missile.png");
     Game::assets->AddTexture("hitbox", "assets/textures/hitbox.png");
     Game::assets->AddTexture("player", "assets/textures/player.png");
     Game::assets->AddTexture("map001", "assets/textures/map001.png");
