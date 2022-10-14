@@ -19,6 +19,9 @@ public:
     void AddTexture(std::string id, const char *name);
     SDL_Texture *GetTexture(std::string id);
 
+    void AddColor(std::string id, SDL_Color color);
+    SDL_Color GetColor(std::string id);
+
     void AddFont(std::string id, const char *name, int size);
     TTF_Font *GetFont(std::string id);
 
@@ -31,5 +34,6 @@ private:
     Manager *manager;
     std::map<std::string, std::string> maps;
     std::map<std::string, TTF_Font *> fonts;
+    std::map<std::string, SDL_Color> colors;
     std::map<std::string, SDL_Texture *> textures;
 };

@@ -6,7 +6,7 @@
 class UIComponent : public Component
 {
 public:
-    UIComponent(int x, int y, std::string txt, std::string fnt, SDL_Color &clr) : text(txt), font(fnt), color(clr)
+    UIComponent(int x, int y, std::string txt, std::string fnt, SDL_Color clr) : text(txt), font(fnt), color(clr)
     {
         position.x = x;
         position.y = y;

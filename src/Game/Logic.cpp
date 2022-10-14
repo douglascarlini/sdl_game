@@ -38,11 +38,10 @@ void Logic::init()
     map = new Map("map001");
     map->LoadMap(Game::groupMap, 25, 20, 2);
 
-    SDL_Color white = {255, 255, 255, 255};
-    label.addComponent<UIComponent>(10, 10, "TESTE", "label", white);
-
     Game::assets->CreatePlayer(Vector2D(100, 100), Vector2D(10, 0), 200, 2, "player");
     Game::assets->CreateProjectile(Vector2D(100, 100), Vector2D(10, 0), 200, 2, "projectile");
+
+    label.addComponent<UIComponent>(10, 10, "TESTE", "label", Game::assets->GetColor("white"));
 }
 
 void timer(Entity *label)

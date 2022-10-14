@@ -5,6 +5,11 @@
 
 AssetManager::AssetManager(Manager *man) : manager(man)
 {
+    AddColor("white", {255, 255, 255, 255});
+    AddColor("green", {0, 255, 0, 255});
+    AddColor("blue", {0, 0, 255, 255});
+    AddColor("red", {255, 0, 0, 255});
+    AddColor("black", {0, 0, 0, 255});
 }
 
 void AssetManager::AddTexture(std::string id, const char *path)
@@ -15,6 +20,16 @@ void AssetManager::AddTexture(std::string id, const char *path)
 SDL_Texture *AssetManager::GetTexture(std::string id)
 {
     return textures[id];
+}
+
+void AssetManager::AddColor(std::string id, SDL_Color color)
+{
+    colors.emplace(id, color);
+}
+
+SDL_Color AssetManager::GetColor(std::string id)
+{
+    return colors[id];
 }
 
 void AssetManager::AddFont(std::string id, const char *path, int size)
