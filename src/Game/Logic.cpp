@@ -79,13 +79,6 @@ void Logic::update()
             player->getComponent<TransformComponent>().velocity * -1;
         }
     }
-
-    // map move by game speed
-    // for (auto t : tiles)
-    // {
-    //     t->getComponent<TileComponent>().dst.x += Game::speed.x;
-    //     t->getComponent<TileComponent>().dst.y += Game::speed.y;
-    // }
 }
 
 void Logic::render()
