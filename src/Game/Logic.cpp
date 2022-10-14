@@ -4,14 +4,14 @@
 #include "../Engine/ECS/ECS.hpp"
 #include "../Engine/Timer.hpp"
 #include "../Engine/Map.hpp"
-#include "../Engine/UI.hpp"
 #include "Logic.hpp"
+
+#include <sstream>
 
 extern Map *map;
 extern Manager manager;
 
-auto &wall(manager.addEntity());
-auto &player(manager.addEntity());
+auto &label(manager.addEntity());
 
 auto &tiles(manager.getGroup(Game::groupMap));
 auto &players(manager.getGroup(Game::groupPlayers));
@@ -19,46 +19,48 @@ auto &enemies(manager.getGroup(Game::groupEnemies));
 auto &colliders(manager.getGroup(Game::groupColliders));
 auto &projectiles(manager.getGroup(Game::groupProjectiles));
 
-void timer()
-{
-    char timer[100];
-    float t = Timer::elapsed();
-    sprintf(timer, "TIME: %.1fs", t);
-    UI::Text(Game::renderer, timer, 10, 10, 20);
-}
-
 void Logic::init()
 {
     Timer::start();
+
+    if (TTF_Init() == -1)
+    {
+        std::cout << "Error: SDL_TTF" << std::endl;
+    }
 
     Game::assets->AddTexture("projectile", "assets/textures/missile.png");
     Game::assets->AddTexture("hitbox", "assets/textures/hitbox.png");
     Game::assets->AddTexture("player", "assets/textures/player.png");
     Game::assets->AddTexture("map001", "assets/textures/map001.png");
+    Game::assets->AddFont("label", "assets/fonts/retro.ttf", 20);
     Game::assets->AddMap("map001", "assets/maps/map001.map");
 
     map = new Map("map001");
     map->LoadMap(Game::groupMap, 25, 20, 2);
 
-    player.addComponent<TransformComponent>();
-    player.addComponent<SpriteComponent>("player");
-    player.getComponent<SpriteComponent>().AddAnim("Idle", Animation(0, 4, 100, true));
-    player.getComponent<SpriteComponent>().Play("Idle");
-    player.addComponent<ColliderComponent>("player");
-    player.addComponent<InputComponent>();
-    player.addGroup(Game::groupPlayers);
+    SDL_Color white = {255, 255, 255, 255};
+    label.addComponent<UIComponent>(10, 10, "TESTE", "label", white);
 
-    player.getComponent<TransformComponent>().velocity.r = 1;
-
+    Game::assets->CreatePlayer(Vector2D(100, 100), Vector2D(10, 0), 200, 2, "player");
     Game::assets->CreateProjectile(Vector2D(100, 100), Vector2D(10, 0), 200, 2, "projectile");
+}
+
+void timer(Entity *label)
+{
+    char str[100];
+    float t = Timer::elapsed();
+    sprintf(str, "TIME: %.1fs", t);
+    label->getComponent<UIComponent>().SetText(str);
 }
 
 void Logic::update()
 {
-    player.getComponent<TransformComponent>().position.r += player.getComponent<TransformComponent>().velocity.r;
+    timer(&label);
 
-    Game::camera.y = player.getComponent<TransformComponent>().position.y - (WIN_HEIGHT / 2);
-    Game::camera.x = player.getComponent<TransformComponent>().position.x - (WIN_WIDTH / 2);
+    auto &player = players[0];
+
+    Game::camera.y = player->getComponent<TransformComponent>().position.y - (WIN_HEIGHT / 2);
+    Game::camera.x = player->getComponent<TransformComponent>().position.x - (WIN_WIDTH / 2);
 
     if (Game::camera.x < 0)
         Game::camera.x = 0;
@@ -69,22 +71,22 @@ void Logic::update()
     if (Game::camera.y > Game::camera.h)
         Game::camera.y = Game::camera.h;
 
+    SDL_Rect pcol = player->getComponent<ColliderComponent>().collider;
+    for (auto &c : colliders)
+    {
+        SDL_Rect ccol = c->getComponent<ColliderComponent>().collider;
+        if (Collision::check(pcol, ccol))
+        {
+            player->getComponent<TransformComponent>().velocity * -1;
+        }
+    }
+
     // map move by game speed
     // for (auto t : tiles)
     // {
     //     t->getComponent<TileComponent>().dst.x += Game::speed.x;
     //     t->getComponent<TileComponent>().dst.y += Game::speed.y;
     // }
-
-    SDL_Rect pcol = player.getComponent<ColliderComponent>().collider;
-    for (auto &c : colliders)
-    {
-        SDL_Rect ccol = c->getComponent<ColliderComponent>().collider;
-        if (Collision::check(pcol, ccol))
-        {
-            player.getComponent<TransformComponent>().velocity * -1;
-        }
-    }
 }
 
 void Logic::render()
@@ -104,12 +106,7 @@ void Logic::render()
     for (auto &p : projectiles)
         p->draw();
 
-    timer();
+    label.draw();
 
-    float vx = player.getComponent<TransformComponent>().velocity.x;
-    float vy = player.getComponent<TransformComponent>().velocity.y;
-
-    char s[100];
-    sprintf(s, "VEL: %.1f x %.1f", vx, vy);
-    UI::Text(Game::renderer, s, 10, 40, 20);
+    // timer();
 }

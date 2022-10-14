@@ -5,3 +5,4 @@
 #include "ColliderComponent.hpp"
 #include "TransformComponent.hpp"
 #include "InputComponent.hpp"
+#include "UIComponent.hpp"

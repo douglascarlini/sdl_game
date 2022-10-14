@@ -4,7 +4,6 @@
 #include "Vector2D.hpp"
 #include "Game.hpp"
 #include "Map.hpp"
-#include "UI.hpp"
 
 Map *map;
 Logic logic;
