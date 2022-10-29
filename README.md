@@ -28,6 +28,6 @@ Follow [this tutorial](https://lazyfoo.net/tutorials/SDL/01_hello_SDL/windows/mi
 
 ### How to Build
 
-**Mac:** `make mac`
-**Linux:** `make gnu`
-**Windows:** `make win`
+- **Mac:** `make mac`
+- **Linux:** `make gnu`
+- **Windows:** `make win`
